@@ -1,25 +1,20 @@
 import Button from '../Button'
 import * as Styles from './styles'
 import { useState } from 'react'
-import useRandomQuotes from '../../hooks/useRandomQuotes'
-import { requestGenerateRandomQuoteToPlugin } from '../../lib/figma'
-``
 export const Footer = () => {
   const [isLoading, setIsLoading] = useState(false)
-  const getRandomQuote = useRandomQuotes()
-
-  const generateRandomQuote = async () => {
-    setIsLoading(true)
-    const randomQuote = await getRandomQuote()
-    requestGenerateRandomQuoteToPlugin(randomQuote)
-    setIsLoading(false)
+  const requestToPlugin = (payload: string) => {
+    parent.postMessage({ pluginMessage: payload }, '*')
   }
 
+  const test = () => {
+    requestToPlugin('createBdd')
+  }
   return (
     <Styles.FooterWrapper>
       <Button
-        text={isLoading ? 'Loading...' : 'Random Quote'}
-        onClick={generateRandomQuote}
+        text={isLoading ? '생성중...' : 'BDD 생성'}
+        onClick={test}
       ></Button>
     </Styles.FooterWrapper>
   )

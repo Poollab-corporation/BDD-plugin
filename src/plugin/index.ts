@@ -1,49 +1,27 @@
-import {
-  PluginAction,
-  PluginCallbackFunction,
-  PluginMessagePayload,
-} from '../shared'
+figma.showUI(__html__, { width: 1000, height: 700, title: 'Stead BDD' })
 
-figma.showUI(__html__, { width: 400, height: 700, title: 'Stead BDD' })
+figma.ui.onmessage = async (payload: string) => {
+  console.log('createBdd', payload)
+  if (payload === 'createBdd') {
+    const frameSize = 800
+    const frame = figma.createFrame()
+    frame.resizeWithoutConstraints(frameSize, frameSize)
 
-async function loadFonts() {
-  await figma.loadFontAsync({
-    family: 'Roboto',
-    style: 'Regular',
-  })
-}
+    frame.x = figma.viewport.center.x - frameSize
+    frame.y = figma.viewport.center.y - frameSize
 
-function isPayload(payload: unknown): payload is PluginMessagePayload {
-  return (
-    typeof payload === 'object' &&
-    Object.prototype.hasOwnProperty.call(payload, 'type') &&
-    Object.prototype.hasOwnProperty.call(payload, 'randomQuote')
-  )
-}
-
-function generateRandomQuote({ randomQuote }: PluginMessagePayload) {
-  const currentSelectionNode = figma.currentPage.selection[0]
-  if (currentSelectionNode?.type === 'TEXT') {
-    currentSelectionNode.fontName = {
-      family: 'Roboto',
-      style: 'Regular',
-    }
-    currentSelectionNode.characters = `${randomQuote.text} - ${
-      randomQuote.author || 'Unknown'
-    }`
-  } else {
-    throw new Error('No text node is selected')
+    const rectangle = figma.createRectangle()
+    frame.appendChild(rectangle)
+    rectangle.resize(800, 800)
+    rectangle.x = 0
+    rectangle.y = 0
+    rectangle.fills = [
+      {
+        type: 'SOLID',
+        color: { r: 1, g: 1, b: 0 },
+      },
+    ]
   }
+
+  figma.closePlugin()
 }
-
-loadFonts().then(() => {
-  figma.ui.onmessage = (payload: unknown) => {
-    const callbackMap: Record<PluginAction, PluginCallbackFunction> = {
-      generateRandomQuote,
-    }
-
-    if (isPayload(payload) && callbackMap[payload.type]) {
-      callbackMap[payload.type](payload)
-    }
-  }
-})

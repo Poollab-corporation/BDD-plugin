@@ -1,34 +1,51 @@
 import styled from 'styled-components'
 
 export const BddWrapper = styled.div`
-  height: 370px;
+  display: flex;
+  height: 310px;
   overflow-y: auto;
-  padding: 10px 10px 60px 10px;
-  > div:nth-child(n + 2) {
-    margin-top: 10px;
-  }
+  margin-bottom: 100px;
+  padding: 20px 10px;
+  gap: 10px;
 `
 
-export const BddStepWrapper = styled.div``
-
-export const BddLabel = styled.p`
-  ${(props) => props.theme.fonts[14]};
+export const BddStepWrapper = styled.div<{ $isSelectBox?: boolean }>`
+  flex: ${(props) => (props.$isSelectBox ? '0 0 35%' : '0 0 25%')};
 `
 
-export const InputWrapper = styled.div`
+export const BddInputWrapper = styled.div``
+
+export const BddLabel = styled.div`
+  display: flex;
+  height: 20px;
+  justify-content: space-between;
+  align-items: center;
+  ${(props) => props.theme.fonts[12]};
+  font-weight: ${(props) => props.theme.fontWeights.semiBold};
+  margin-bottom: 6px;
+`
+export const DescriptionWrapper = styled.div`
+  margin-top: 10px;
+`
+
+export const TaskWrapper = styled(DescriptionWrapper)`
   display: flex;
   gap: 10px;
-  margin-top: 10px;
+  justify-content: space-between;
+  align-items: center;
   > div {
-    flex: 1 1 auto;
+    flex: 0 0 calc(100% - 30px);
+  }
+  > button {
+    flex: 0 0 20px;
   }
 `
 
 export const RemoveButton = styled.button`
   position: relative;
-  width: 40px;
-  height: 40px;
-  flex: 0 0 40px;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
   border-radius: 4px;
   background: ${(props) => props.theme.colors.blue500};
   &:before {
@@ -36,7 +53,7 @@ export const RemoveButton = styled.button`
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 20px;
+    width: 10px;
     height: 2px;
     transform: translate(-50%, -50%);
     background: ${(props) => props.theme.colors.white};
@@ -49,7 +66,7 @@ export const AddButton = styled(RemoveButton)`
     top: 50%;
     left: 50%;
     width: 2px;
-    height: 20px;
+    height: 10px;
     transform: translate(-50%, -50%);
     background: ${(props) => props.theme.colors.white};
   }

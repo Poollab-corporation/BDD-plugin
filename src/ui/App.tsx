@@ -5,14 +5,19 @@ import { GlobalStyle } from '../styles/globalStyle'
 import Header from './components/Header'
 import Bdd from './containers/Bdd'
 import Footer from './components/Footer'
+import { FormProvider, useForm } from 'react-hook-form'
 
 function App() {
+  const method = useForm()
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Header />
-      <Bdd />
-      <Footer />
+      <FormProvider {...method}>
+        <Header />
+        <Bdd />
+        <Footer />
+      </FormProvider>
     </ThemeProvider>
   )
 }

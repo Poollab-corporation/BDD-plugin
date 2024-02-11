@@ -13,7 +13,7 @@ export const HeaderWrap = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  padding: 10px;
+  padding: 20px 10px;
   background: ${(props) => props.theme.colors.blue500};
   > div {
     flex: 1 1 100%;
