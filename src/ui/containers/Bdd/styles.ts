@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const BddWrapper = styled.div`
   display: flex;
-  height: 310px;
+  height: 260px;
   margin-bottom: 100px;
   padding: 20px 10px;
   position: relative;
@@ -50,6 +50,8 @@ export const TaskWrapper = styled(DescriptionWrapper)`
     flex: 0 0 20px;
   }
 `
+
+export const WhenList = styled.div``
 
 export const SubTaskWrapper = styled.div`
   position: relative;

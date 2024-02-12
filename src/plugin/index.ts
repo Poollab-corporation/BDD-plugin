@@ -47,6 +47,7 @@ const generateTaskTitle = (taskName: string, taskIndex: number) => {
 }
 
 figma.ui.onmessage = async (payload: any) => {
+  console.log('figma', figma)
   if (payload.type === 'createBdd') {
     await figma.loadFontAsync(fontName)
 
