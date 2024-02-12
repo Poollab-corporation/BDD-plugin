@@ -3,13 +3,13 @@ import { FIGMA_COLORS } from '../constants/colors'
 const TASKS = ['GIVEN', 'WHEN', 'THEN']
 const fontName = { family: 'Roboto', style: 'Regular' }
 
-figma.showUI(__html__, { width: 1000, height: 700, title: 'Stead BDD' })
+figma.showUI(__html__, { width: 1000, height: 700, title: 'Stead BDD Creator' })
 
 const generateTaskTitle = (taskName: string, taskIndex: number) => {
   const taskWrapper = figma.createFrame()
-  taskWrapper.resize(246, 300)
+  taskWrapper.resize(246, 400)
   taskWrapper.name = `${taskName} 영역 프레임`
-  taskWrapper.x = 300 + (taskIndex + 1) * 100
+  taskWrapper.x = 160 + (taskIndex + 1) * 286
   taskWrapper.y = 300
   taskWrapper.fills = [
     {
@@ -22,7 +22,6 @@ const generateTaskTitle = (taskName: string, taskIndex: number) => {
   const taskTextWrapper = figma.createFrame()
   taskTextWrapper.name = `${taskName} 프레임`
   taskTextWrapper.resize(246, 40)
-
   taskTextWrapper.fills = [
     {
       type: 'SOLID',
@@ -34,6 +33,8 @@ const generateTaskTitle = (taskName: string, taskIndex: number) => {
   taskText.fontName = { family: 'Roboto', style: 'Regular' }
   taskText.characters = taskName
   taskText.fontSize = 24
+  taskText.x = 10
+  taskText.y = 6.5
   taskText.fills = [
     {
       type: 'SOLID',
@@ -49,12 +50,16 @@ figma.ui.onmessage = async (payload: any) => {
   if (payload.type === 'createBdd') {
     await figma.loadFontAsync(fontName)
 
-    const frameSize = 1295
+    const frameSize = {
+      width: 1295,
+      height: 721,
+    }
     const frame = figma.createFrame()
-    frame.resizeWithoutConstraints(frameSize, frameSize)
+    frame.name = 'BDD Creator Frame'
+    frame.resizeWithoutConstraints(frameSize.width, frameSize.height)
 
-    frame.x = figma.viewport.center.x - frameSize
-    frame.y = figma.viewport.center.y - frameSize
+    frame.x = figma.viewport.center.x - frameSize.width
+    frame.y = figma.viewport.center.y - frameSize.height
     frame.verticalPadding = 80
     frame.horizontalPadding = 80
     frame.fills = [
@@ -92,6 +97,8 @@ figma.ui.onmessage = async (payload: any) => {
     const titleText = figma.createText()
     titleText.fontName = { family: 'Roboto', style: 'Regular' }
     titleText.characters = payload.postData.title || '개발 테스트 텍스트'
+    titleText.x = 20
+    titleText.y = 20
     titleText.fontSize = 36
     titleText.fills = [
       {
@@ -102,10 +109,11 @@ figma.ui.onmessage = async (payload: any) => {
 
     const linkText = figma.createText()
     linkText.fontName = { family: 'Roboto', style: 'Regular' }
+    linkText.characters = '기획서 바로가기'
+    linkText.fontSize = 36
+    linkText.textDecoration = 'UNDERLINE'
     linkText.x = 800
     linkText.y = 20
-    linkText.characters = '기획서 바로가기'
-    linkText.fontSize = 20
     linkText.fills = [
       {
         type: 'SOLID',
