@@ -19,7 +19,7 @@ export const Then = () => {
             options={TASK_OPTIONS}
             defaultValue={TASK_OPTIONS[0]}
             menuPortalTarget={document.body}
-            styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+            styles={{ menuPortal: (base) => ({ ...base, height: '200px', zIndex: 9999 }) }}
             menuShouldScrollIntoView={false}
           />
         </Styles.ThenWrapper>

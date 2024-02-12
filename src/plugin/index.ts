@@ -1,7 +1,49 @@
 import { FIGMA_COLORS } from '../constants/colors'
+
+const TASKS = ['GIVEN', 'WHEN', 'THEN']
 const fontName = { family: 'Roboto', style: 'Regular' }
 
 figma.showUI(__html__, { width: 1000, height: 700, title: 'Stead BDD' })
+
+const generateTaskTitle = (taskName: string, taskIndex: number) => {
+  const taskWrapper = figma.createFrame()
+  taskWrapper.resize(246, 300)
+  taskWrapper.name = `${taskName} 영역 프레임`
+  taskWrapper.x = 300 + (taskIndex + 1) * 100
+  taskWrapper.y = 300
+  taskWrapper.fills = [
+    {
+      type: 'SOLID',
+      color: FIGMA_COLORS.BLUE_500,
+      opacity: 0,
+    },
+  ]
+
+  const taskTextWrapper = figma.createFrame()
+  taskTextWrapper.name = `${taskName} 프레임`
+  taskTextWrapper.resize(246, 40)
+
+  taskTextWrapper.fills = [
+    {
+      type: 'SOLID',
+      color: FIGMA_COLORS.BLUE_500,
+    },
+  ]
+
+  const taskText = figma.createText()
+  taskText.fontName = { family: 'Roboto', style: 'Regular' }
+  taskText.characters = taskName
+  taskText.fontSize = 24
+  taskText.fills = [
+    {
+      type: 'SOLID',
+      color: FIGMA_COLORS.WHITE,
+    },
+  ]
+  taskTextWrapper.appendChild(taskText)
+  taskWrapper.appendChild(taskTextWrapper)
+  return taskWrapper
+}
 
 figma.ui.onmessage = async (payload: any) => {
   if (payload.type === 'createBdd') {
@@ -46,6 +88,7 @@ figma.ui.onmessage = async (payload: any) => {
         opacity: 0,
       },
     ]
+
     const titleText = figma.createText()
     titleText.fontName = { family: 'Roboto', style: 'Regular' }
     titleText.characters = payload.postData.title || '개발 테스트 텍스트'
@@ -90,6 +133,9 @@ figma.ui.onmessage = async (payload: any) => {
     ]
 
     frame.appendChild(imageFrame)
+    TASKS.forEach((task, taskIndex) =>
+      frame.appendChild(generateTaskTitle(task, taskIndex))
+    )
     frame.appendChild(titleWrapperFrame)
   }
   figma.closePlugin()
