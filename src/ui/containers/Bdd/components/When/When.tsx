@@ -7,11 +7,23 @@ export const When = () => {
   const [whenList, setWhenList] = useRecoilState(whenListAtom)
 
   const handleAddWhenWithThen = () => {
-    console.log('when with then')
+    const whenItem = [
+      {
+        task: '',
+        variables: [
+          {
+            variable: '',
+          },
+        ],
+      },
+    ]
+    const addWhenList = [...whenList, whenItem]
+    console.log('addWhenList', addWhenList)
   }
 
-  const handleAddWhenTask = () => {
-    console.log('handleAddTask')
+  const handleAddVariable = () => {
+    const containWhenList = { ...whenList }
+    console.log('handleAddVariable', containWhenList)
   }
 
   return (
@@ -24,7 +36,7 @@ export const When = () => {
         <TextInput placeholder={'사용자 액션을 입력해주세요.'} />
         <Styles.TaskWrapper>
           <TextInput placeholder={'사용자 태스크를 입력해주세요.'} />
-          <Styles.AddButton onClick={handleAddWhenTask} />
+          <Styles.AddButton onClick={handleAddVariable} />
         </Styles.TaskWrapper>
         {whenList.map((variable, index) => {
           return (
