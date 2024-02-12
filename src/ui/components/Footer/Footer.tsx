@@ -19,7 +19,6 @@ export const Footer = () => {
         url: method.getValues('url'),
       },
     })
-    console.log(method.getValues())
   }
   return (
     <Styles.FooterWrapper>

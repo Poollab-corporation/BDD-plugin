@@ -29,7 +29,7 @@ export const Header = () => {
             <BddStyles.BddLabel>권한</BddStyles.BddLabel>
             <Select
               options={ENTERPRISE_AUTHORITY_OPTIONS}
-              defaultValue={ENTERPRISE_AUTHORITY_OPTIONS[0]}
+              placeholder={'권한을 선택해주세요.'}
               onChange={onChange}
             />
           </BddStyles.BddInputWrapper>

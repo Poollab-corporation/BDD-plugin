@@ -1,10 +1,12 @@
 import { FIGMA_COLORS } from '../constants/colors'
+const fontName = { family: 'Roboto', style: 'Regular' }
 
 figma.showUI(__html__, { width: 1000, height: 700, title: 'Stead BDD' })
 
 figma.ui.onmessage = async (payload: any) => {
-  console.log('createBdd', payload)
   if (payload.type === 'createBdd') {
+    await figma.loadFontAsync(fontName)
+
     const frameSize = 1295
     const frame = figma.createFrame()
     frame.resizeWithoutConstraints(frameSize, frameSize)
@@ -13,20 +15,82 @@ figma.ui.onmessage = async (payload: any) => {
     frame.y = figma.viewport.center.y - frameSize
     frame.verticalPadding = 80
     frame.horizontalPadding = 80
+    frame.fills = [
+      {
+        type: 'SOLID',
+        color: FIGMA_COLORS.WHITE,
+        opacity: 0,
+      },
+    ]
 
-    const rectangle = figma.createRectangle()
-    frame.appendChild(rectangle)
-    rectangle.resize(1135, 83)
-    rectangle.x = 80
-    rectangle.y = 80
+    const titleWrapperFrame = figma.createFrame()
+    titleWrapperFrame.name = 'BDD 상단영역 프레임'
+    titleWrapperFrame.resize(1135, 83)
+    titleWrapperFrame.x = 80
+    titleWrapperFrame.y = 80
 
-    rectangle.fills = [
+    titleWrapperFrame.fills = [
       {
         type: 'SOLID',
         color: FIGMA_COLORS.BLUE_500,
       },
     ]
-  }
 
+    const titleFrame = figma.createFrame()
+    titleFrame.resize(655, 83)
+    titleFrame.name = 'BDD 텍스트 프레임'
+    titleFrame.fills = [
+      {
+        type: 'SOLID',
+        color: FIGMA_COLORS.BLUE_500,
+        opacity: 0,
+      },
+    ]
+    const titleText = figma.createText()
+    titleText.fontName = { family: 'Roboto', style: 'Regular' }
+    titleText.characters = payload.postData.title || '개발 테스트 텍스트'
+    titleText.fontSize = 36
+    titleText.fills = [
+      {
+        type: 'SOLID',
+        color: FIGMA_COLORS.WHITE,
+      },
+    ]
+
+    const linkText = figma.createText()
+    linkText.fontName = { family: 'Roboto', style: 'Regular' }
+    linkText.x = 800
+    linkText.y = 20
+    linkText.characters = '기획서 바로가기'
+    linkText.fontSize = 20
+    linkText.fills = [
+      {
+        type: 'SOLID',
+        color: FIGMA_COLORS.BLACK,
+      },
+    ]
+    linkText.hyperlink = {
+      type: 'URL',
+      value: 'https://app.steadhr.com/',
+    }
+
+    titleFrame.appendChild(titleText)
+    titleWrapperFrame.appendChild(linkText)
+    titleWrapperFrame.appendChild(titleFrame)
+
+    const imageFrame = figma.createFrame()
+    imageFrame.resize(300, 400)
+    imageFrame.x = 80
+    imageFrame.y = 300
+    imageFrame.fills = [
+      {
+        type: 'SOLID',
+        color: FIGMA_COLORS.GRAY,
+      },
+    ]
+
+    frame.appendChild(imageFrame)
+    frame.appendChild(titleWrapperFrame)
+  }
   figma.closePlugin()
 }

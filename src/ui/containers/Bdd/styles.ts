@@ -3,14 +3,24 @@ import styled from 'styled-components'
 export const BddWrapper = styled.div`
   display: flex;
   height: 310px;
-  overflow-y: auto;
   margin-bottom: 100px;
   padding: 20px 10px;
+  position: relative;
   gap: 10px;
+  overflow-y: scroll;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 94px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: ${(props) => props.theme.colors.neutralGray300};
+  }
 `
 
 export const BddStepWrapper = styled.div<{ $isSelectBox?: boolean }>`
-  flex: ${(props) => (props.$isSelectBox ? '0 0 35%' : '0 0 25%')};
+  flex: ${(props) => (props.$isSelectBox ? '1 1 35%' : '0 0 25%')};
 `
 
 export const BddInputWrapper = styled.div``
@@ -25,7 +35,7 @@ export const BddLabel = styled.div`
   margin-bottom: 6px;
 `
 export const DescriptionWrapper = styled.div`
-  margin-top: 10px;
+  margin-top: 20px;
 `
 
 export const TaskWrapper = styled(DescriptionWrapper)`
@@ -41,6 +51,37 @@ export const TaskWrapper = styled(DescriptionWrapper)`
   }
 `
 
+export const SubTaskWrapper = styled.div`
+  position: relative;
+  padding-left: 34px;
+  margin-top: 10px;
+  &:before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    height: 28px;
+    width: 20px;
+    left: 20px;
+    border: 1px solid #bebebe;
+    border-right: none;
+    border-top: none;
+  }
+`
+
+export const ThenWrapper = styled(TaskWrapper)`
+  display: flex;
+  > div {
+    flex: 1;
+  }
+`
+
+export const SubThenWrapper = styled(SubTaskWrapper)`
+  display: flex;
+  gap: 10px;
+  > div {
+    flex: 1;
+  }
+`
 export const RemoveButton = styled.button`
   position: relative;
   width: 20px;
