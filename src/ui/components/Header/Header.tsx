@@ -4,7 +4,6 @@ import * as BddStyles from '../../containers/Bdd/styles'
 import Select from 'react-select'
 import { ENTERPRISE_AUTHORITY_OPTIONS } from '../../../constants'
 import { Controller, useFormContext } from 'react-hook-form'
-import { BddInputWrapper, BddLabel } from '../../containers/Bdd/styles'
 
 export const Header = () => {
   const methods = useFormContext()
