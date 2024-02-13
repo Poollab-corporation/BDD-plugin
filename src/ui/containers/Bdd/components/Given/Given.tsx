@@ -1,38 +1,43 @@
 import * as Styles from '../../styles'
 import TextInput from '../../../../components/TextInput'
-import { useState } from 'react'
-import { Controller, useFormContext } from 'react-hook-form'
-import * as BddStyles from '../../styles'
-import Select from 'react-select'
-import { ENTERPRISE_AUTHORITY_OPTIONS } from '../../../../../constants'
+import { Controller, useFieldArray, useFormContext } from 'react-hook-form'
 
-export const Given = () => {
-  const methods = useFormContext()
+interface GivenProps {
+  index: number
+}
+
+export const Given = ({ index }: GivenProps) => {
+  const { control } = useFormContext()
+  const { append, fields } = useFieldArray({
+    control: control,
+    name: `scenarios.${index}.given`,
+  })
+
+  const handleGivenAdd = () => {
+    append({ text: '' })
+  }
+
   return (
     <Styles.BddStepWrapper>
-      <Styles.BddLabel>Given</Styles.BddLabel>
-      <Controller
-        render={({ field: { onChange } }) => (
-          <TextInput
-            placeholder={'요소/환경을 입력해주세요.'}
-            onChange={onChange}
+      <Styles.BddLabel>
+        Given
+        <Styles.AddButton onClick={handleGivenAdd} />
+      </Styles.BddLabel>
+      {fields?.map((given, givenIndex: number) => {
+        return (
+          <Controller
+            key={`given_${givenIndex}`}
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                key={`given_${givenIndex}`}
+                placeholder={'요소/환경을 입력해주세요.'}
+              />
+            )}
+            name={`scenarios.${index}.given.${givenIndex}.text`}
           />
-        )}
-        name={'given'}
-        control={methods.control}
-      />
-      <Styles.DescriptionWrapper>
-        <Controller
-          render={({ field: { onChange } }) => (
-            <TextInput
-              placeholder={'요소/환경에 대한 설명을 입력해 주세요.'}
-              onChange={onChange}
-            />
-          )}
-          name={'given_description'}
-          control={methods.control}
-        />
-      </Styles.DescriptionWrapper>
+        )
+      })}
     </Styles.BddStepWrapper>
   )
 }

@@ -1,18 +1,17 @@
 import * as Styles from './styles'
-import Given from './components/Given'
-import When from './components/When'
-import Then from './components/Then'
-import { RecoilRoot } from 'recoil'
+import Item from './components/Item'
 
-export const Bdd = () => {
+interface BddProps {
+  scenariosFields: any
+}
+
+export const Bdd = ({ scenariosFields }: BddProps) => {
   return (
-    <RecoilRoot>
-      <Styles.BddWrapper>
-        <Given />
-        <When />
-        <Then />
-      </Styles.BddWrapper>
-    </RecoilRoot>
+    <Styles.BddWrapper>
+      {scenariosFields?.map((scenario, index) => {
+        return <Item key={index} scenario={scenario} index={index} />
+      })}
+    </Styles.BddWrapper>
   )
 }
 

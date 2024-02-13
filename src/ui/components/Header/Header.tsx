@@ -4,9 +4,16 @@ import * as BddStyles from '../../containers/Bdd/styles'
 import Select from 'react-select'
 import { ENTERPRISE_AUTHORITY_OPTIONS } from '../../../constants'
 import { Controller, useFormContext } from 'react-hook-form'
+import Button from '../Button'
+import React from 'react'
 
-export const Header = () => {
+interface HeaderProps {
+  onClick: () => void
+}
+
+export const Header = ({ onClick }: HeaderProps) => {
   const methods = useFormContext()
+
   return (
     <Styles.HeaderWrap>
       <Styles.Logo aria-label={'스테드'} />
@@ -50,6 +57,7 @@ export const Header = () => {
         name={'url'}
         control={methods.control}
       />
+      <Button text={'시나리오 추가'} state="standard" onClick={onClick} />
     </Styles.HeaderWrap>
   )
 }

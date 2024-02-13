@@ -1,32 +1,51 @@
 import * as Styles from '../../styles'
-import TextInput from '../../../../components/TextInput'
-import Select from 'react-select'
-import { TASK_OPTIONS } from '../../../../../constants/task'
-import { useRecoilValue } from 'recoil'
-import { whenListAtom } from '../../recoil/atom'
+import { Controller, useFieldArray, useFormContext } from 'react-hook-form'
+import SubItem from '../SubItem'
 
-export const Then = () => {
-  const whenList = useRecoilValue(whenListAtom)
+interface ThenProps {
+  index: number
+}
+
+export const Then = ({ index }: ThenProps) => {
+  const { control } = useFormContext()
+  const { append, fields } = useFieldArray({
+    control: control,
+    name: `scenarios.${index}.then`,
+  })
+
+  const handleAdd = () => {
+    append({ text: '' })
+  }
 
   return (
-    <Styles.BddStepWrapper $isSelectBox={true}>
+    <Styles.BddStepWrapper>
       <Styles.BddStepWrapper>
-        <Styles.BddLabel>Then</Styles.BddLabel>
-        <TextInput placeholder={'액션 결과를 입력해주세요.'} />
-        {whenList.map((variable, index) => {
+        <Styles.BddLabel>
+          Then
+          <Styles.AddButton onClick={handleAdd} />
+        </Styles.BddLabel>
+        {fields?.map((_, thenIndex: number) => {
           return (
-            <Styles.WhenList key={`when_${index}`}>
-              <Styles.ThenWrapper>
-                <TextInput placeholder={'태스크 결과를 입력해주세요.'} />
-              </Styles.ThenWrapper>
-              {variable.variables.map((result, resultIndex) => {
-                return (
-                  <Styles.SubThenWrapper key={`variable_index_${index}`}>
-                    <TextInput placeholder={'태스크 결과를 입력해주세요.'} />
-                  </Styles.SubThenWrapper>
-                )
-              })}
-            </Styles.WhenList>
+            <>
+              <Controller
+                key={`then${thenIndex}`}
+                render={({ field }) => (
+                  <>
+                    <textarea
+                      {...field}
+                      key={`then${thenIndex}`}
+                      placeholder={'사용자 액션을 입력해주세요.'}
+                    />
+                  </>
+                )}
+                name={`scenarios.${index}.then.${thenIndex}.text`}
+              />
+              <SubItem
+                scenarioIndex={index}
+                itemIndex={thenIndex}
+                name="then"
+              />
+            </>
           )
         })}
       </Styles.BddStepWrapper>

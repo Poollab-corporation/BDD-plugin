@@ -1,26 +1,20 @@
 import * as Styles from '../../styles'
-import TextInput from '../../../../components/TextInput'
-import { useRecoilState } from 'recoil'
-import { whenListAtom } from '../../recoil/atom'
+import { Controller, useFieldArray, useFormContext } from 'react-hook-form'
+import SubItem from '../SubItem'
 
-export const When = () => {
-  const [whenList, setWhenList] = useRecoilState(whenListAtom)
+interface WhenProps {
+  index: number
+}
 
-  const handleAddWhenWithThen = () => {
-    const whenItem = {
-      title: '',
-      items: [],
-    }
-    const addWhenList = [...whenList, whenItem]
-    setWhenList(addWhenList)
-  }
+export const When = ({ index }: WhenProps) => {
+  const { control } = useFormContext()
+  const { append: whenAppend, fields: whenFields } = useFieldArray({
+    control: control,
+    name: `scenarios.${index}.when`,
+  })
 
-  const handleAddVariable = (index: number) => {
-    const variableItem = {
-      variable: '',
-      result: '',
-    }
-    const addVariables = [...whenList[index].items, variableItem]
+  const handleWhenAdd = () => {
+    whenAppend({ text: '' })
   }
 
   return (
@@ -28,24 +22,30 @@ export const When = () => {
       <Styles.BddStepWrapper>
         <Styles.BddLabel>
           When
-          <Styles.AddButton onClick={handleAddWhenWithThen} />
+          <Styles.AddButton onClick={handleWhenAdd} />
         </Styles.BddLabel>
-        <TextInput placeholder={'사용자 액션을 입력해주세요.'} />
-        {whenList.map((when, index) => {
+        {whenFields?.map((_, whenIndex: number) => {
           return (
-            <Styles.WhenList key={`when_${index}`}>
-              <Styles.TaskWrapper>
-                <TextInput placeholder={'사용자 태스크를 입력해주세요.'} />
-                <Styles.AddButton onClick={() => handleAddVariable(index)} />
-              </Styles.TaskWrapper>
-              {when.items.map((variable, variableIndex) => {
-                return (
-                  <Styles.SubTaskWrapper key={`variable_${variableIndex}`}>
-                    <TextInput placeholder="해당 태스크의 경우/변수를 입력해주세요." />
-                  </Styles.SubTaskWrapper>
-                )
-              })}
-            </Styles.WhenList>
+            <>
+              <Controller
+                key={`when_${whenIndex}`}
+                render={({ field }) => (
+                  <>
+                    <textarea
+                      {...field}
+                      key={`when_${whenIndex}`}
+                      placeholder={'사용자 액션을 입력해주세요.'}
+                    />
+                  </>
+                )}
+                name={`scenarios.${index}.when.${whenIndex}.text`}
+              />
+              <SubItem
+                scenarioIndex={index}
+                itemIndex={whenIndex}
+                name="when"
+              />
+            </>
           )
         })}
       </Styles.BddStepWrapper>

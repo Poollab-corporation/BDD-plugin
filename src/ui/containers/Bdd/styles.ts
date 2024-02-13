@@ -1,22 +1,8 @@
 import styled from 'styled-components'
 
 export const BddWrapper = styled.div`
-  display: flex;
-  height: 260px;
-  margin-bottom: 100px;
-  padding: 20px 10px;
-  position: relative;
-  gap: 10px;
-  overflow-y: scroll;
-  &:before {
-    content: '';
-    position: absolute;
-    top: 94px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: ${(props) => props.theme.colors.neutralGray300};
-  }
+  max-height: 200px;
+  overflow: auto;
 `
 
 export const BddStepWrapper = styled.div<{ $isSelectBox?: boolean }>`
@@ -113,4 +99,8 @@ export const AddButton = styled(RemoveButton)`
     transform: translate(-50%, -50%);
     background: ${(props) => props.theme.colors.white};
   }
+`
+export const ItemWrapper = styled.div`
+  display: flex;
+  align-items: center;
 `

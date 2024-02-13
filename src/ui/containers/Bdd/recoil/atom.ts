@@ -12,15 +12,5 @@ interface WhenListAtomList {
 
 export const whenListAtom = atom<WhenListAtomList[]>({
   key: 'whenList',
-  default: [
-    {
-      title: '',
-      items: [
-        {
-          item: '',
-          subItems: [],
-        },
-      ],
-    },
-  ],
+  default: [],
 })

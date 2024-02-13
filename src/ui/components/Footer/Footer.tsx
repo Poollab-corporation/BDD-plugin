@@ -11,14 +11,15 @@ export const Footer = () => {
   }
 
   const onCreateBdd = (values: FieldValues) => {
-    requestToPlugin({
-      type: 'createBdd',
-      postData: {
-        title: values.title,
-        authority: values.authority,
-        url: values.url,
-      },
-    })
+    console.log(values)
+    // requestToPlugin({
+    //   type: 'createBdd',
+    //   postData: {
+    //     title: values.title,
+    //     authority: values.authority,
+    //     url: values.url,
+    //   },
+    // })
   }
 
   // const payload = {
