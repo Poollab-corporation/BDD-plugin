@@ -3,7 +3,11 @@ import { FIGMA_COLORS } from '../constants/colors'
 const TASKS = ['GIVEN', 'WHEN', 'THEN']
 const fontName = { family: 'Roboto', style: 'Regular' }
 
-figma.showUI(__html__, { width: 1000, height: 700, title: 'Stead BDD Creator' })
+figma.showUI(__html__, {
+  width: parseInt(String(figma.viewport.bounds.width)),
+  height: 1000,
+  title: 'Stead BDD Creator',
+})
 
 const generateTaskTitle = (taskName: string, taskIndex: number) => {
   const taskWrapper = figma.createFrame()

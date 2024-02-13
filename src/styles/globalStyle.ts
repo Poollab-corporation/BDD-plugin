@@ -3,9 +3,9 @@ import { normalize } from 'styled-normalize'
 
 export const GlobalStyle = createGlobalStyle`
     ${normalize}
-    html
-    body {
-        overflow: hidden;
+    body{
+      padding-bottom:80px;
+      overflow-y:auto;
     }
 
     * {

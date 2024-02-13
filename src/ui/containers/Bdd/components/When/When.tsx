@@ -31,7 +31,7 @@ export const When = ({ index }: WhenProps) => {
                 key={`when_${whenIndex}`}
                 render={({ field }) => (
                   <>
-                    <textarea
+                    <Styles.TextArea
                       {...field}
                       key={`when_${whenIndex}`}
                       placeholder={'사용자 액션을 입력해주세요.'}

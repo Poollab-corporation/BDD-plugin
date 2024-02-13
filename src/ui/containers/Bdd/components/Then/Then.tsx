@@ -31,10 +31,10 @@ export const Then = ({ index }: ThenProps) => {
                 key={`then${thenIndex}`}
                 render={({ field }) => (
                   <>
-                    <textarea
+                    <Styles.TextArea
                       {...field}
                       key={`then${thenIndex}`}
-                      placeholder={'사용자 액션을 입력해주세요.'}
+                      placeholder={'사용자 액션의 결과를 입력해주세요.'}
                     />
                   </>
                 )}

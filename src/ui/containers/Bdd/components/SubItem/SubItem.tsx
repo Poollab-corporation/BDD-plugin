@@ -1,4 +1,5 @@
 import * as Styles from '../../styles'
+
 import TextInput from '../../../../components/TextInput'
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form'
 
@@ -20,20 +21,14 @@ export const SubItem = ({ scenarioIndex, name, itemIndex }: SubItemProps) => {
   }
 
   if (fields.length < 1) {
-    return (
-      <button type="button" onClick={handleSubItemAdd}>
-        추가
-      </button>
-    )
+    return <Styles.ExpandedButton type="button" onClick={handleSubItemAdd} />
   }
   return (
     <>
       {fields?.map((subItem, subIndex) => {
         return (
           <Styles.SubThenWrapper key={`variable_index_${subIndex}`}>
-            <button type="button" onClick={handleSubItemAdd}>
-              추가
-            </button>
+            <Styles.AddButton type="button" onClick={handleSubItemAdd} />
             <Controller
               key={`${name}_sub_${subIndex}`}
               render={({ field }) => (
