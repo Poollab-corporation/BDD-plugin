@@ -1,7 +1,7 @@
 import Button from '../Button'
 import * as Styles from './styles'
 import { useState } from 'react'
-import { useFormContext } from 'react-hook-form'
+import { FieldValues, useFormContext } from 'react-hook-form'
 export const Footer = () => {
   const [isLoading, setIsLoading] = useState(false)
 
@@ -10,21 +10,52 @@ export const Footer = () => {
     parent.postMessage({ pluginMessage: payload }, '*')
   }
 
-  const onCreateBdd = () => {
+  const onCreateBdd = (values: FieldValues) => {
     requestToPlugin({
       type: 'createBdd',
       postData: {
-        title: method.getValues('title'),
-        authority: method.getValues('authority'),
-        url: method.getValues('url'),
+        title: values.title,
+        authority: values.authority,
+        url: values.url,
       },
     })
   }
+
+  // const payload = {
+  //   title: '',
+  //   url: '',
+  //   gwt: [
+  //     {
+  //       given: {
+  //         title: '',
+  //         item: '',
+  //       },
+  //       when: {
+  //         title: '',
+  //         items: [
+  //           {
+  //             item: '',
+  //             subItems: [],
+  //           },
+  //         ],
+  //       },
+  //       then: {
+  //         title: '',
+  //         items: [
+  //           {
+  //             item: '',
+  //             subItems: [],
+  //           },
+  //         ],
+  //       },
+  //     },
+  //   ],
+  // }
   return (
     <Styles.FooterWrapper>
       <Button
         text={isLoading ? '생성중...' : 'BDD 생성'}
-        onClick={onCreateBdd}
+        onClick={method.handleSubmit(onCreateBdd)}
       ></Button>
     </Styles.FooterWrapper>
   )

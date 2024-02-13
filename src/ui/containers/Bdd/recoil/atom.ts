@@ -1,26 +1,24 @@
 import { atom } from 'recoil'
 
-interface Variable {
-  variable: string
-  result: string
+interface Items {
+  item: string
+  subItems: string[]
 }
 
 interface WhenListAtomList {
-  task: string
-  taskResult: string
-  variables: Variable[]
+  title: string
+  items: Items[]
 }
 
 export const whenListAtom = atom<WhenListAtomList[]>({
   key: 'whenList',
   default: [
     {
-      task: '',
-      taskResult: '',
-      variables: [
+      title: '',
+      items: [
         {
-          variable: '',
-          result: '',
+          item: '',
+          subItems: [],
         },
       ],
     },

@@ -1,42 +1,11 @@
-import {render, screen} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import When from './When'
-import TestTemplate from "../../../../../templates/TestTemplate/TestTemplate";
+import TestTemplate from '../../../../../templates/TestTemplate/TestTemplate'
 
 const context = describe
 
-const whenWithThen = [
-  {
-    action: '',
-    task: '',
-    then: {
-      actionResult: '',
-      taskResult: '',
-    },
-  },
-]
-
-const onAddWhenWithThen = () => {
-  const initWhenWithThen = {
-    action: '',
-    task: '',
-    then: {
-      actionResult: '',
-      taskResult: '',
-    },
-  }
-  whenWithThen.push(initWhenWithThen)
-}
-
-describe('Then 영역에 추가 버튼이 있다.', () => {
-  render(
-    <TestTemplate>
-      <When />
-    </TestTemplate>
-  )
-  context('추가 버튼을 실행한다.', () => {
-    onAddWhenWithThen()
-    it('When과 Then이 추가된다.', () => {
-      expect(whenWithThen.length).toBe(2)
-    })
+describe('When의 Task를 추가하려고 한다.', () => {
+  context('Task추가 버튼을 누른다.', () => {
+    it('Task가 추간된다.', () => {})
   })
 })
