@@ -1,6 +1,7 @@
 import * as Styles from '../../styles'
 import TextInput from '../../../../components/TextInput'
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form'
+import { useEffect } from 'react'
 
 interface GivenProps {
   index: number
@@ -16,6 +17,11 @@ export const Given = ({ index }: GivenProps) => {
   const handleGivenAdd = () => {
     append({ text: '' })
   }
+
+  useEffect(() => {
+    console.log(fields)
+    control
+  }, [control, fields])
 
   return (
     <Styles.BddStepWrapper>

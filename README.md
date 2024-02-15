@@ -1,39 +1,73 @@
-# Figma Plugin React Boilerplate
+~~# Stead BDD Creater For Figma Plugin
 
-react boilerplate for react plugin
 
-## Getting started
 
-1. Create a project based on this boilerplate.
+### 데이터 형태
 
-```bash
-$ npx degit https://github.com/hseoy/figma-plugin-react-boilerplate <project name>
+```typescript
+  const payload = {
+    title: '',
+    url: '',
+    gwt: [
+      {
+        given: {
+          title: '',
+          item: '',
+        },
+        when: {
+          title: '',
+          items: [
+            {
+              item: '',
+              subItems: [],
+            },
+          ],
+        },
+        then: {
+          title: '',
+          items: [
+            {
+              item: '',
+              subItems: [],
+            },
+          ],
+        },
+      },
+    ],
+   }
 ```
 
-2. Install the dependencies.
+---
+
+### Figma for plugin 개발 및 유지보수 방법
+
+1. Dependencies를 설치한다.
 
 ```bash
 $ yarn install
 ```
 
-3. To rebuild it when the files are changed, run `yarn watch`
+2. 파일이 변경될 때 감지하기 위해 `yarn watch`를 실행하거나, `build`를 위하 `yarn build`를 한다.
 
 ```bash
-$ yarn watch
+$ yarn watch or yarn build
 ```
 
-4. The plugin is ready to be added to Figma for development.
+4. 피그마 개발 모드가 준비된다.
 
-### Figma for plugin development
+---
 
-1. Open Figma desktop application.
+### Figma for plugin 사용 방법
 
-2. Click on your profile icon dropdown in the top right and select `Plugins` from the list
+1. Figma 데스크톱 앱 실행
 
-3. Scroll down to the `In development` section and click the plus(+) icon
+2. Design Mode에서, 마우스 오른쪽 버튼을 눌러 `Plugins`으로 이동
 
-4. Choose `Import from manifest`
+3. `In development` 섹션에서 (+) 아이콘으로 이동한 후, `Import from manifest` 실행
 
-5. Locate the manifest.json in your newly created project and then select Open
+   > git을 이용하여 받지 않은 사용자는 import시, `yarn build`를 이용하여 추출된 `dist`폴더와 `manifest.json`을 한 폴더에 넣고 `import`를 진행한다.
+4. `manifest.json`을 선택하여 `import`
 
-6. Now you will be able to use this plugin.
+5. `import`된 `plugin`을 실행한다.
+
+---~~

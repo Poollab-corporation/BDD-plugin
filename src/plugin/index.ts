@@ -36,10 +36,15 @@ const generateBadge = (badgeName: string) => {
   return badgeWrapper
 }
 
-const generateTaskTitle = (taskName: string, taskIndex: number) => {
+const generateTaskTitle = (
+  taskName: string,
+  taskIndex: number,
+  taskData: any
+) => {
   const taskWrapper = figma.createFrame()
   taskWrapper.resize(246, 400)
   taskWrapper.name = `${taskName} 영역 프레임`
+  console.log('taskData', taskData)
   taskWrapper.x = 160 + (taskIndex + 1) * 286
   taskWrapper.y = 300
   taskWrapper.fills = [
@@ -62,7 +67,7 @@ const generateTaskTitle = (taskName: string, taskIndex: number) => {
 
   const taskText = figma.createText()
   taskText.fontName = { family: 'Roboto', style: 'Regular' }
-  taskText.characters = taskName
+  taskText.characters = taskName.toUpperCase()
   taskText.fontSize = 24
   taskText.x = 10
   taskText.y = 6.5
@@ -72,8 +77,67 @@ const generateTaskTitle = (taskName: string, taskIndex: number) => {
       color: FIGMA_COLORS.WHITE,
     },
   ]
+
   taskTextWrapper.appendChild(taskText)
   taskWrapper.appendChild(taskTextWrapper)
+
+  const gwtTextWrapper = figma.createFrame()
+  gwtTextWrapper.name = `내용 프레임`
+  gwtTextWrapper.resize(246, 32)
+  gwtTextWrapper.fills = [
+    {
+      type: 'SOLID',
+      color: FIGMA_COLORS.BLUE_200,
+    },
+  ]
+  gwtTextWrapper.y = 62
+
+  const gwtText = figma.createText()
+  gwtText.fontName = { family: 'Roboto', style: 'Regular' }
+  gwtText.characters = taskData.text
+  gwtText.fontSize = 14
+  gwtText.fills = [
+    {
+      type: 'SOLID',
+      color: FIGMA_COLORS.BLACK,
+    },
+  ]
+  gwtText.x = 10
+  gwtText.y = 10
+
+  if (taskData.subItems?.length > 0) {
+    taskData.subItems.forEach((sub, subIndex) => {
+      const gwtTextSubWrapper = figma.createFrame()
+      gwtTextSubWrapper.name = `서브 내용 프레임`
+      gwtTextSubWrapper.resize(246, 32)
+      gwtTextSubWrapper.fills = [
+        {
+          type: 'SOLID',
+          color: FIGMA_COLORS.BLUE_200,
+        },
+      ]
+      gwtTextWrapper.y = 60 * subIndex
+
+      const gwtSubText = figma.createText()
+      gwtSubText.fontName = { family: 'Roboto', style: 'Regular' }
+      gwtSubText.characters = taskData.text
+      gwtSubText.fontSize = 14
+      gwtSubText.fills = [
+        {
+          type: 'SOLID',
+          color: FIGMA_COLORS.BLACK,
+        },
+      ]
+      gwtSubText.x = 10
+      gwtSubText.y = 10
+
+      taskWrapper.appendChild(gwtTextSubWrapper)
+      gwtTextSubWrapper.appendChild(gwtSubText)
+    })
+  }
+
+  gwtTextWrapper.appendChild(gwtText)
+  taskWrapper.appendChild(gwtTextWrapper)
   return taskWrapper
 }
 
@@ -158,6 +222,10 @@ figma.ui.onmessage = async (payload: any) => {
       value: payload.postData.url,
     }
 
+    titleFrame.layoutMode = 'HORIZONTAL'
+    titleFrame.layoutSizingHorizontal = 'FIXED'
+    titleFrame.horizontalPadding = 50
+
     titleFrame.appendChild(titleText)
     titleFrame.appendChild(generateBadge('개발'))
     titleWrapperFrame.appendChild(linkText)
@@ -175,9 +243,15 @@ figma.ui.onmessage = async (payload: any) => {
     ]
 
     frame.appendChild(imageFrame)
-    TASKS.forEach((task, taskIndex) =>
-      frame.appendChild(generateTaskTitle(task, taskIndex))
-    )
+    payload.postData.scenarios.forEach((scenario, scenarioIndex) => {
+      let taskIndex = 0
+      for (const tasks in scenario) {
+        taskIndex++
+        scenario[tasks].forEach((taskData) => {
+          frame.appendChild(generateTaskTitle(tasks, taskIndex - 1, taskData))
+        })
+      }
+    })
     frame.appendChild(titleWrapperFrame)
   }
   figma.closePlugin()

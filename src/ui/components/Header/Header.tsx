@@ -12,7 +12,7 @@ interface HeaderProps {
 }
 
 export const Header = ({ onClick }: HeaderProps) => {
-  const methods = useFormContext()
+  const { register, control } = useFormContext()
 
   return (
     <Styles.HeaderWrap>
@@ -28,7 +28,7 @@ export const Header = ({ onClick }: HeaderProps) => {
           </BddStyles.BddInputWrapper>
         )}
         name={'title'}
-        control={methods.control}
+        control={control}
       />
       <Controller
         render={({ field: { onChange } }) => (
@@ -38,11 +38,12 @@ export const Header = ({ onClick }: HeaderProps) => {
               options={ENTERPRISE_AUTHORITY_OPTIONS}
               placeholder={'권한을 선택해주세요.'}
               onChange={onChange}
+              isSearchable={false}
             />
           </BddStyles.BddInputWrapper>
         )}
         name={'authority'}
-        control={methods.control}
+        control={control}
       />
       <Controller
         render={({ field: { onChange } }) => (
@@ -55,7 +56,7 @@ export const Header = ({ onClick }: HeaderProps) => {
           </BddStyles.BddInputWrapper>
         )}
         name={'url'}
-        control={methods.control}
+        control={control}
       />
       <Button text={'시나리오 추가'} state="standard" onClick={onClick} />
     </Styles.HeaderWrap>

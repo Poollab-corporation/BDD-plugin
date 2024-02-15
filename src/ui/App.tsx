@@ -29,6 +29,7 @@ type FormValues = {
 
 function App() {
   const methods = useForm<FormValues>({
+    mode: 'onChange',
     defaultValues: {
       title: '',
       authority: '',
