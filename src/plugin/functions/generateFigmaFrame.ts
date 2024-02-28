@@ -9,6 +9,7 @@ const generateFigmaFrame = async () => {
   }
   const frame = figma.createFrame()
   frame.name = 'BDD Creator Frame'
+  frame.clipsContent = false
   frame.resizeWithoutConstraints(frameSize.width, frameSize.height)
 
   frame.x = figma.viewport.center.x - frameSize.width

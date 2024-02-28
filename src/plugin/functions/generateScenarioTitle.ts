@@ -1,10 +1,12 @@
 import { FIGMA_COLORS } from '../../constants/colors'
+import { generateScenarioTitleProps } from '../../interfaces/scenario'
 
-const generateScenarioTitle = (
-  taskName: string,
-  taskIndex: number,
-  taskData: any
-) => {
+const generateScenarioTitle = ({
+  scenarioIndex,
+  taskName,
+  taskIndex,
+  taskData,
+}: generateScenarioTitleProps) => {
   const taskWrapper = figma.createFrame()
   taskWrapper.resize(1135, 40)
   taskWrapper.name = `${taskName} 영역 프레임`

@@ -1,10 +1,17 @@
 import { FIGMA_COLORS } from '../../constants/colors'
+import { generateScenarioTitleProps } from '../../interfaces/scenario'
 
-const generateTask = (taskName: string, taskIndex: number, taskData: any) => {
+const generateTask = ({
+  scenarioIndex,
+  taskName,
+  taskIndex,
+  taskData,
+}: generateScenarioTitleProps) => {
   const taskWrapper = figma.createFrame()
+  taskWrapper.clipsContent = false
   taskWrapper.resize(246, 400)
   taskWrapper.name = `${taskName} 영역 프레임`
-  taskWrapper.x = 160 + taskIndex * 286
+  taskWrapper.x = 160 + taskIndex * 326
   taskWrapper.y = 300
   taskWrapper.fills = [
     {
@@ -41,14 +48,14 @@ const generateTask = (taskName: string, taskIndex: number, taskData: any) => {
   taskWrapper.appendChild(taskTextWrapper)
 
   const gwtTextWrapper = figma.createFrame()
-  gwtTextWrapper.name = `내용 프레임`
-  gwtTextWrapper.resize(246, 32)
+  gwtTextWrapper.name = `${taskName} 내용 프레임`
   gwtTextWrapper.fills = [
     {
       type: 'SOLID',
       color: FIGMA_COLORS.BLUE_200,
     },
   ]
+  gwtTextWrapper.resize(246, 40)
   gwtTextWrapper.y = 62
 
   const gwtText = figma.createText()
@@ -64,6 +71,9 @@ const generateTask = (taskName: string, taskIndex: number, taskData: any) => {
   gwtText.x = 10
   gwtText.y = 10
 
+  gwtTextWrapper.appendChild(gwtText)
+  taskWrapper.appendChild(gwtTextWrapper)
+
   if (taskData.subItems?.length > 0) {
     taskData.subItems.forEach((sub, subIndex) => {
       const gwtTextSubWrapper = figma.createFrame()
@@ -75,11 +85,12 @@ const generateTask = (taskName: string, taskIndex: number, taskData: any) => {
           color: FIGMA_COLORS.BLUE_200,
         },
       ]
-      gwtTextWrapper.y = 62 * subIndex
+      gwtTextSubWrapper.x = 20
+      gwtTextSubWrapper.y = (40 + 32 + 50) * (subIndex + 1)
 
       const gwtSubText = figma.createText()
       gwtSubText.fontName = { family: 'Roboto', style: 'Regular' }
-      gwtSubText.characters = taskData.text
+      gwtSubText.characters = sub.text
       gwtSubText.fontSize = 14
       gwtSubText.fills = [
         {
@@ -92,12 +103,9 @@ const generateTask = (taskName: string, taskIndex: number, taskData: any) => {
 
       gwtTextSubWrapper.appendChild(gwtSubText)
       taskWrapper.appendChild(gwtTextSubWrapper)
-
-      /**
-       * TODO: 서브 아이템이 있을 경우 처리
-       */
     })
   }
+
   return taskWrapper
 }
 

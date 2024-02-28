@@ -18,6 +18,7 @@ const generateTitleWrapper = (payload: any) => {
 
   const titleFrame = figma.createFrame()
   titleFrame.resize(655, 83)
+  titleFrame.itemSpacing = 20
   titleFrame.name = 'BDD 텍스트 프레임'
   titleFrame.fills = [
     {
@@ -26,12 +27,13 @@ const generateTitleWrapper = (payload: any) => {
       opacity: 0,
     },
   ]
+  titleFrame.x = 0
+  titleFrame.y = 20
 
   const titleText = figma.createText()
+  titleFrame.resize(655, 50)
   titleText.fontName = { family: 'Roboto', style: 'Regular' }
   titleText.characters = payload.postData.title || '개발 테스트 텍스트'
-  titleText.x = 20
-  titleText.y = 20
   titleText.fontSize = 36
   titleText.fills = [
     {
