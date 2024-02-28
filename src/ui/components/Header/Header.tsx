@@ -12,7 +12,7 @@ interface HeaderProps {
 }
 
 export const Header = ({ onClick }: HeaderProps) => {
-  const { register, control } = useFormContext()
+  const { control } = useFormContext()
 
   return (
     <Styles.HeaderWrap>
@@ -50,7 +50,9 @@ export const Header = ({ onClick }: HeaderProps) => {
           <BddStyles.BddInputWrapper>
             <BddStyles.BddLabel>기획서 URL</BddStyles.BddLabel>
             <TextInput
-              placeholder={'기획서 URL을 입력해주세요.'}
+              placeholder={
+                '기획서 URL을 입력해주세요. URL형식에 맞게 입력해야 합니다.'
+              }
               onChange={onChange}
             />
           </BddStyles.BddInputWrapper>

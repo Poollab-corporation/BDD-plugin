@@ -6,54 +6,16 @@ import Header from './components/Header'
 import Bdd from './containers/Bdd'
 import Footer from './components/Footer'
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form'
-
-type FormValues = {
-  title: string
-  authority: string
-  url: string
-  scenarios: {
-    given: {
-      text: string
-    }[]
-    when: {
-      text: string
-      subItems?: {
-        text: string
-      }[]
-    }[]
-    then: {
-      text: string
-    }[]
-  }[]
-}
+import { FormValues } from '../types/formValue'
+import {
+  bddDefaultValue,
+  scenarioDefaultValue,
+} from '../constants/bddDfaultValue'
 
 function App() {
   const methods = useForm<FormValues>({
     mode: 'onChange',
-    defaultValues: {
-      title: '',
-      authority: '',
-      url: '',
-      scenarios: [
-        {
-          given: [
-            {
-              text: '',
-            },
-          ],
-          when: [
-            {
-              text: '',
-            },
-          ],
-          then: [
-            {
-              text: '',
-            },
-          ],
-        },
-      ],
-    },
+    defaultValues: bddDefaultValue,
   })
   const { append, fields: scenariosFields } = useFieldArray({
     control: methods.control,
@@ -61,23 +23,7 @@ function App() {
   })
 
   const handleScenarioAdd = () => {
-    append({
-      given: [
-        {
-          text: '',
-        },
-      ],
-      when: [
-        {
-          text: '',
-        },
-      ],
-      then: [
-        {
-          text: '',
-        },
-      ],
-    })
+    append(scenarioDefaultValue)
   }
   return (
     <ThemeProvider theme={theme}>

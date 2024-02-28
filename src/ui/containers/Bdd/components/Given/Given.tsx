@@ -18,11 +18,6 @@ export const Given = ({ index }: GivenProps) => {
     append({ text: '' })
   }
 
-  useEffect(() => {
-    console.log(fields)
-    control
-  }, [control, fields])
-
   return (
     <Styles.BddStepWrapper>
       <Styles.BddLabel>
@@ -32,11 +27,11 @@ export const Given = ({ index }: GivenProps) => {
       {fields?.map((given, givenIndex: number) => {
         return (
           <Controller
-            key={`given_${givenIndex}`}
+            key={`given_${index}_${givenIndex}`}
             render={({ field }) => (
               <TextInput
                 {...field}
-                key={`given_${givenIndex}`}
+                key={`given_${index}_${givenIndex}`}
                 placeholder={'요소/환경을 입력해주세요.'}
               />
             )}

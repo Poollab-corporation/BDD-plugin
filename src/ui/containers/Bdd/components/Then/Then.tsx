@@ -28,12 +28,12 @@ export const Then = ({ index }: ThenProps) => {
           return (
             <>
               <Controller
-                key={`then${thenIndex}`}
+                key={`then_${index}_${thenIndex}`}
                 render={({ field }) => (
                   <>
                     <Styles.TextArea
                       {...field}
-                      key={`then${thenIndex}`}
+                      key={`then_${index}_${thenIndex}`}
                       placeholder={'사용자 액션의 결과를 입력해주세요.'}
                     />
                   </>

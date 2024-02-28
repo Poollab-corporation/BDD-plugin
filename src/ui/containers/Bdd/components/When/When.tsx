@@ -28,12 +28,12 @@ export const When = ({ index }: WhenProps) => {
           return (
             <>
               <Controller
-                key={`when_${whenIndex}`}
+                key={`when_${index}_${whenIndex}`}
                 render={({ field }) => (
                   <>
                     <Styles.TextArea
                       {...field}
-                      key={`when_${whenIndex}`}
+                      key={`when_${index}_${whenIndex}`}
                       placeholder={'사용자 액션을 입력해주세요.'}
                     />
                   </>

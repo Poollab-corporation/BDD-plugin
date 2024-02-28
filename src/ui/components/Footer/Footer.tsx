@@ -11,43 +11,13 @@ export const Footer = () => {
   }
 
   const onCreateBdd = (values: FieldValues) => {
-    console.log(values)
+    console.log('values', values)
     requestToPlugin({
       type: 'createBdd',
       postData: values,
     })
   }
 
-  // const payload = {
-  //   title: '',
-  //   url: '',
-  //   gwt: [
-  //     {
-  //       given: {
-  //         title: '',
-  //         item: '',
-  //       },
-  //       when: {
-  //         title: '',
-  //         items: [
-  //           {
-  //             item: '',
-  //             subItems: [],
-  //           },
-  //         ],
-  //       },
-  //       then: {
-  //         title: '',
-  //         items: [
-  //           {
-  //             item: '',
-  //             subItems: [],
-  //           },
-  //         ],
-  //       },
-  //     },
-  //   ],
-  // }
   return (
     <Styles.FooterWrapper>
       <Button
