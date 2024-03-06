@@ -1,20 +1,25 @@
 import * as Styles from '../../styles'
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form'
-import SubItem from '../SubItem'
 
 interface WhenProps {
   index: number
+  taskIndex: number
+  onAddTask: () => void
 }
 
-export const When = ({ index }: WhenProps) => {
-  const { control } = useFormContext()
-  const { append: whenAppend, fields: whenFields } = useFieldArray({
+export const When = ({ index, taskIndex, onAddTask }: WhenProps) => {
+  const { setValue, control } = useFormContext()
+  const { update } = useFieldArray({
     control: control,
-    name: `scenarios.${index}.when`,
+    name: `scenarios.${index}.tasks.${taskIndex}.when`,
   })
 
-  const handleWhenAdd = () => {
-    whenAppend({ text: '' })
+  const handleTasksAdd = () => {
+    onAddTask()
+  }
+
+  const handleChangeWhen = (value: string) => {
+    setValue(`scenarios.${index}.tasks.${taskIndex}.when`, value)
   }
 
   return (
@@ -22,32 +27,22 @@ export const When = ({ index }: WhenProps) => {
       <Styles.BddStepWrapper>
         <Styles.BddLabel>
           When
-          <Styles.AddButton onClick={handleWhenAdd} />
+          <Styles.AddButton onClick={handleTasksAdd} />
         </Styles.BddLabel>
-        {whenFields?.map((_, whenIndex: number) => {
-          return (
+        <Controller
+          render={({ field }) => (
             <>
-              <Controller
-                key={`when_${index}_${whenIndex}`}
-                render={({ field }) => (
-                  <>
-                    <Styles.TextArea
-                      {...field}
-                      key={`when_${index}_${whenIndex}`}
-                      placeholder={'사용자 액션을 입력해주세요.'}
-                    />
-                  </>
-                )}
-                name={`scenarios.${index}.when.${whenIndex}.text`}
-              />
-              <SubItem
-                scenarioIndex={index}
-                itemIndex={whenIndex}
-                name="when"
+              <Styles.TextArea
+                {...field}
+                placeholder={'사용자 액션을 입력해주세요.'}
+                onChange={(e) => {
+                  handleChangeWhen(e.target.value)
+                }}
               />
             </>
-          )
-        })}
+          )}
+          name={`scenarios.${index}.tasks.${taskIndex}.when`}
+        />
       </Styles.BddStepWrapper>
     </Styles.BddStepWrapper>
   )

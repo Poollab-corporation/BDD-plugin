@@ -6,8 +6,9 @@ import generateScenarioTitle from './functions/generateScenarioTitle'
 import generateScenarioWrapper from './functions/generateScenarioWrapper'
 
 figma.showUI(__html__, {
-  width: parseInt(String(figma.viewport.bounds.width)),
-  height: 1000,
+  // width: parseInt(String(figma.viewport.bounds.width)),
+  width: 1000,
+  height: 800,
   title: 'Stead BDD Creator',
 })
 

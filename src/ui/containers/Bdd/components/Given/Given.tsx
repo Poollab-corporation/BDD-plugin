@@ -1,44 +1,46 @@
 import * as Styles from '../../styles'
 import TextInput from '../../../../components/TextInput'
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form'
-import { useEffect } from 'react'
 
 interface GivenProps {
   index: number
+  taskIndex: number
+  onAddTask: () => void
 }
 
-export const Given = ({ index }: GivenProps) => {
-  const { control } = useFormContext()
-  const { append, fields } = useFieldArray({
+export const Given = ({ index, taskIndex, onAddTask }: GivenProps) => {
+  const { setValue, control } = useFormContext()
+  const { update } = useFieldArray({
     control: control,
-    name: `scenarios.${index}.given`,
+    name: `scenarios.${index}.tasks.${taskIndex}.given`,
   })
 
-  const handleGivenAdd = () => {
-    append({ text: '' })
+  const handleTasksAdd = () => {
+    onAddTask()
+  }
+
+  const handleChangeGiven = (value: string) => {
+    setValue(`scenarios.${index}.tasks.${taskIndex}.given`, value)
   }
 
   return (
     <Styles.BddStepWrapper>
       <Styles.BddLabel>
         Given
-        <Styles.AddButton onClick={handleGivenAdd} />
+        <Styles.AddButton onClick={handleTasksAdd} />
       </Styles.BddLabel>
-      {fields?.map((given, givenIndex: number) => {
-        return (
-          <Controller
-            key={`given_${index}_${givenIndex}`}
-            render={({ field }) => (
-              <TextInput
-                {...field}
-                key={`given_${index}_${givenIndex}`}
-                placeholder={'요소/환경을 입력해주세요.'}
-              />
-            )}
-            name={`scenarios.${index}.given.${givenIndex}.text`}
+      <Controller
+        render={({ field }) => (
+          <TextInput
+            {...field}
+            placeholder={'요소/환경을 입력해주세요.'}
+            onChange={(e) => {
+              handleChangeGiven(e.target.value)
+            }}
           />
-        )
-      })}
+        )}
+        name={`scenarios.${index}.tasks.${taskIndex}.given`}
+      />
     </Styles.BddStepWrapper>
   )
 }

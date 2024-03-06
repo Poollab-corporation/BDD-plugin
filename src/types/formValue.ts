@@ -3,20 +3,12 @@ export type FormValues = {
   authority: string
   url: string
   scenarios: {
-    scenario_title: {
-      text: string
-    }[]
-    given: {
-      text: string
-    }[]
-    when: {
-      text: string
-      subItems?: {
-        text: string
-      }[]
-    }[]
-    then: {
-      text: string
+    scenario_title: string
+    tasks: {
+      type: string
+      given: string
+      when: string
+      then: string
     }[]
   }[]
 }

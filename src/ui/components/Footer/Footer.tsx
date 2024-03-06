@@ -11,7 +11,6 @@ export const Footer = () => {
   }
 
   const onCreateBdd = (values: FieldValues) => {
-    console.log('values', values)
     requestToPlugin({
       type: 'createBdd',
       postData: values,
@@ -21,7 +20,7 @@ export const Footer = () => {
   return (
     <Styles.FooterWrapper>
       <Button
-        text={isLoading ? '생성중...' : 'BDD 생성'}
+        text={'BDD 생성'}
         onClick={method.handleSubmit(onCreateBdd)}
       ></Button>
     </Styles.FooterWrapper>

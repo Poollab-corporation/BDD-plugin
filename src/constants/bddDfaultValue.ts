@@ -1,27 +1,11 @@
 export const scenarioDefaultValue = {
-  scenario_title: [
+  scenario_title: '',
+  tasks: [
     {
-      text: '',
-    },
-  ],
-  given: [
-    {
-      text: '',
-    },
-  ],
-  when: [
-    {
-      text: '',
-      subItems: [
-        {
-          text: '',
-        },
-      ],
-    },
-  ],
-  then: [
-    {
-      text: '',
+      type: 'main',
+      given: '',
+      when: '',
+      then: '',
     },
   ],
 }

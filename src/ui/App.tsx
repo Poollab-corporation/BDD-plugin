@@ -25,6 +25,7 @@ function App() {
   const handleScenarioAdd = () => {
     append(scenarioDefaultValue)
   }
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />

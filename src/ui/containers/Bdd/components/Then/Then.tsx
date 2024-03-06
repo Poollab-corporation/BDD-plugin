@@ -4,50 +4,45 @@ import SubItem from '../SubItem'
 
 interface ThenProps {
   index: number
+  taskIndex: number
+  onAddTask: () => void
 }
 
-export const Then = ({ index }: ThenProps) => {
-  const { control } = useFormContext()
-  const { append, fields } = useFieldArray({
+export const Then = ({ index, taskIndex, onAddTask }: ThenProps) => {
+  const { setValue, control } = useFormContext()
+  const { update } = useFieldArray({
     control: control,
-    name: `scenarios.${index}.then`,
+    name: `scenarios.${index}.tasks.${taskIndex}.then`,
   })
 
-  const handleAdd = () => {
-    append({ text: '' })
+  const handleTasksAdd = () => {
+    onAddTask()
   }
 
+  const handleChangeThen = (value: string) => {
+    setValue(`scenarios.${index}.tasks.${taskIndex}.then`, value)
+  }
   return (
     <Styles.BddStepWrapper>
       <Styles.BddStepWrapper>
         <Styles.BddLabel>
           Then
-          <Styles.AddButton onClick={handleAdd} />
+          <Styles.AddButton onClick={handleTasksAdd} />
         </Styles.BddLabel>
-        {fields?.map((_, thenIndex: number) => {
-          return (
+        <Controller
+          render={({ field }) => (
             <>
-              <Controller
-                key={`then_${index}_${thenIndex}`}
-                render={({ field }) => (
-                  <>
-                    <Styles.TextArea
-                      {...field}
-                      key={`then_${index}_${thenIndex}`}
-                      placeholder={'사용자 액션의 결과를 입력해주세요.'}
-                    />
-                  </>
-                )}
-                name={`scenarios.${index}.then.${thenIndex}.text`}
-              />
-              <SubItem
-                scenarioIndex={index}
-                itemIndex={thenIndex}
-                name="then"
+              <Styles.TextArea
+                {...field}
+                placeholder={'사용자 액션의 결과를 입력해주세요.'}
+                onChange={(e) => {
+                  handleChangeThen(e.target.value)
+                }}
               />
             </>
-          )
-        })}
+          )}
+          name={`scenarios.${index}.tasks.${taskIndex}.then`}
+        />
       </Styles.BddStepWrapper>
     </Styles.BddStepWrapper>
   )
